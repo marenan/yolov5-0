@@ -96,8 +96,7 @@ GIT_INFO = check_git_info()
 
 
 def train(hyp, opt, device, callbacks):
-    """
-    Trains the YOLOv5 model on a dataset, managing hyperparameters, model optimization, logging, and validation.
+    """Trains the YOLOv5 model on a dataset, managing hyperparameters, model optimization, logging, and validation.
 
     `hyp` is path/to/hyp.yaml or hyp dictionary.
     """
@@ -325,10 +324,10 @@ def train(hyp, opt, device, callbacks):
     compute_loss = ComputeLoss(model, overlap=overlap)  # init loss class
     # callbacks.run('on_train_start')
     LOGGER.info(
-        f'Image sizes {imgsz} train, {imgsz} val\n'
-        f'Using {train_loader.num_workers * WORLD_SIZE} dataloader workers\n'
+        f"Image sizes {imgsz} train, {imgsz} val\n"
+        f"Using {train_loader.num_workers * WORLD_SIZE} dataloader workers\n"
         f"Logging results to {colorstr('bold', save_dir)}\n"
-        f'Starting training for {epochs} epochs...'
+        f"Starting training for {epochs} epochs..."
     )
     for epoch in range(start_epoch, epochs):  # epoch ------------------------------------------------------------------
         # callbacks.run('on_train_epoch_start')
@@ -405,7 +404,7 @@ def train(hyp, opt, device, callbacks):
             # Log
             if RANK in {-1, 0}:
                 mloss = (mloss * i + loss_items) / (i + 1)  # update mean losses
-                mem = f"{torch.cuda.memory_reserved() / 1E9 if torch.cuda.is_available() else 0:.3g}G"  # (GB)
+                mem = f"{torch.cuda.memory_reserved() / 1e9 if torch.cuda.is_available() else 0:.3g}G"  # (GB)
                 pbar.set_description(
                     ("%11s" * 2 + "%11.4g" * 6)
                     % (f"{epoch}/{epochs - 1}", mem, *mloss, targets.shape[0], imgs.shape[-1])
@@ -541,8 +540,7 @@ def train(hyp, opt, device, callbacks):
 
 
 def parse_opt(known=False):
-    """
-    Parses command line arguments for training configurations, returning parsed arguments.
+    """Parses command line arguments for training configurations, returning parsed arguments.
 
     Supports both known and unknown args.
     """
@@ -740,15 +738,14 @@ def main(opt, callbacks=Callbacks()):
         # Plot results
         plot_evolve(evolve_csv)
         LOGGER.info(
-            f'Hyperparameter evolution finished {opt.evolve} generations\n'
+            f"Hyperparameter evolution finished {opt.evolve} generations\n"
             f"Results saved to {colorstr('bold', save_dir)}\n"
-            f'Usage example: $ python train.py --hyp {evolve_yaml}'
+            f"Usage example: $ python train.py --hyp {evolve_yaml}"
         )
 
 
 def run(**kwargs):
-    """
-    Executes YOLOv5 training with given parameters, altering options programmatically; returns updated options.
+    """Executes YOLOv5 training with given parameters, altering options programmatically; returns updated options.
 
     Example: import train; train.run(data='coco128.yaml', imgsz=320, weights='yolov5m.pt')
     """
