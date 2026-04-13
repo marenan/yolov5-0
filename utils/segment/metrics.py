@@ -66,58 +66,54 @@ class Metric:
 
     @property
     def ap50(self):
-        """
-        AP@0.5 of all classes.
+        """AP@0.5 of all classes.
 
-        Return:
+        Returns:
             (nc, ) or [].
         """
         return self.all_ap[:, 0] if len(self.all_ap) else []
 
     @property
     def ap(self):
-        """AP@0.5:0.95
-        Return:
+        """AP@0.5:0.95.
+
+        Returns:
             (nc, ) or [].
         """
         return self.all_ap.mean(1) if len(self.all_ap) else []
 
     @property
     def mp(self):
-        """
-        Mean precision of all classes.
+        """Mean precision of all classes.
 
-        Return:
+        Returns:
             float.
         """
         return self.p.mean() if len(self.p) else 0.0
 
     @property
     def mr(self):
-        """
-        Mean recall of all classes.
+        """Mean recall of all classes.
 
-        Return:
+        Returns:
             float.
         """
         return self.r.mean() if len(self.r) else 0.0
 
     @property
     def map50(self):
-        """
-        Mean AP@0.5 of all classes.
+        """Mean AP@0.5 of all classes.
 
-        Return:
+        Returns:
             float.
         """
         return self.all_ap[:, 0].mean() if len(self.all_ap) else 0.0
 
     @property
     def map(self):
-        """
-        Mean AP@0.5:0.95 of all classes.
+        """Mean AP@0.5:0.95 of all classes.
 
-        Return:
+        Returns:
             float.
         """
         return self.all_ap.mean() if len(self.all_ap) else 0.0
@@ -127,7 +123,7 @@ class Metric:
         return (self.mp, self.mr, self.map50, self.map)
 
     def class_result(self, i):
-        """Class-aware result, return p[i], r[i], ap50[i], ap[i]"""
+        """Class-aware result, return p[i], r[i], ap50[i], ap[i]."""
         return (self.p[i], self.r[i], self.ap50[i], self.ap[i])
 
     def get_maps(self, nc):
@@ -140,7 +136,7 @@ class Metric:
     def update(self, results):
         """
         Args:
-            results: tuple(p, r, ap, f1, ap_class)
+            results: tuple(p, r, ap, f1, ap_class).
         """
         p, r, all_ap, f1, ap_class_index = results
         self.p = p
@@ -154,8 +150,7 @@ class Metrics:
     """Metric for boxes and masks."""
 
     def __init__(self) -> None:
-        """Initializes Metric objects for bounding boxes and masks to compute performance metrics in the Metrics
-        class.
+        """Initializes Metric objects for bounding boxes and masks to compute performance metrics in the Metrics class.
         """
         self.metric_box = Metric()
         self.metric_mask = Metric()
@@ -163,7 +158,7 @@ class Metrics:
     def update(self, results):
         """
         Args:
-            results: Dict{'boxes': Dict{}, 'masks': Dict{}}
+            results: Dict{'boxes': Dict{}, 'masks': Dict{}}.
         """
         self.metric_box.update(list(results["boxes"].values()))
         self.metric_mask.update(list(results["masks"].values()))
