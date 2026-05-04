@@ -14,8 +14,7 @@ from .general import crop_mask
 class ComputeLoss:
     # Compute losses
     def __init__(self, model, autobalance=False, overlap=False):
-        """Initializes the compute loss function for YOLOv5 models with options for autobalancing and overlap
-        handling.
+        """Initializes the compute loss function for YOLOv5 models with options for autobalancing and overlap handling.
         """
         self.sort_obj_iou = False
         self.overlap = overlap
